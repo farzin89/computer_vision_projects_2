@@ -5,8 +5,17 @@ import time
 
 cap = cv2.VideoCapture(0)
 pTime = 0
+
+mpDraw = mp.solutions.drawing_utils
+mpFaceMesh = mp.solutions.face_mesh
+faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
+
 while True :
     success,img = cap.read()
+
+
+
+
     cTime = time.time()
     fps = 1/(cTime-pTime)
     pTime = cTime
