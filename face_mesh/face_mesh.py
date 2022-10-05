@@ -12,8 +12,12 @@ faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
 
 while True :
     success,img = cap.read()
+    imgRGB = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+    results = faceMesh.process(imgRGB)
 
-
+    if results.multi_face_landmarks:
+        for faceLms in results.multi_face_landmarks:
+            mpDraw.draw_landmarks(img,faceLms,mpFaceMesh.FACE_CONNECTIONS)
 
 
     cTime = time.time()
