@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp
 import os
+import time
 
 wCam,hCam = 640,480
 cap = cv2.VideoCapture(0)
@@ -18,13 +19,19 @@ for imPath in myList:
     overlayList.append(image)
 print(len(overlayList))
 
+pTime = 0
 
 while True:
     success,img = cap.read()
     h,w,c = overlayList[0].shape
     img[0:h,0:w]=overlayList[0]
 
-    
+    cTime = time.time()
+    fps = 1/(cTime-pTime)
+    pTime = cTime
+
+    cv2.putText(img,f'FPS:{int(fps)}',(400,70),cv2.FONT_HERSHEY_PLAIN,3,(255,0,0),3)
+
 
     cv2.imshow("image",img)
     cv2.waitKey(1)
