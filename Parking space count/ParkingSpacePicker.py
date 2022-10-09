@@ -5,7 +5,15 @@ import pickle
 
 
 width,height = 107,48    #(50 -158)=107 and 240-192 = 48 each rectangle width and height
-posList= []
+
+try:
+
+     with open('CarParkPos', 'rb') as f:
+         posList = pickle.load(f)
+except:
+      posList= []
+
+
 def mouseClick(events,x,y,flags,params):
     if events == cv2.EVENT_LBUTTONDOWN:
         posList.append((x,y))
@@ -15,7 +23,8 @@ def mouseClick(events,x,y,flags,params):
             if x1 < x < x1 + width and y1 < y < y1 + height:
                 posList.pop(i)
 
-
+    with open('CarParkPos','wb') as f:
+       pickle.dump(posList,f)
 while True:
 
     img = cv2.imread('carParkImg.png')
