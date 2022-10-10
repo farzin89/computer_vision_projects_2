@@ -11,7 +11,7 @@ with open('CarParkPos', 'rb') as f:
 
 width,height = 107,48
 
-def checkParkingSpace():
+def checkParkingSpace(imagepro):
     for pos in posList:
         x,y = pos
 
@@ -34,8 +34,13 @@ while True :
                                              cv2.THRESH_BINARY_INV,25,16)
     imgMedian = cv2.medianBlur(imgThreshold,5)
 
+    #make thicker
+    kernel = np.ones((3,3),np.uint8)
+    imDilate = cv2.dilate(imgMedian,kernel,iterations = 1)
 
-    checkParkingSpace()
+
+
+    checkParkingSpace(imDilate)
     for pos in posList:
         cv2.rectangle(img, pos, (pos[0] + width, pos[1] + height), (255, 0, 255), 2)
 
@@ -44,6 +49,7 @@ while True :
     cv2.imshow("ImageBlur", imgBlur)
     cv2.imshow("ImageThreshold", imgThreshold)
     cv2.imshow("ImageMedian", imgMedian)
+    cv2.imshow("ImageDilate", imDilate)
     cv2.waitKey(1)
 
 # is car inside the rectangle or not
