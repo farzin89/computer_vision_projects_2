@@ -29,6 +29,12 @@ while True :
     imgGray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     imgBlur = cv2.GaussianBlur(imgGray,(3,3),1)
 
+    # convert to binary image
+    imgThreshold = cv2.adaptiveThreshold(imgBlur,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                             cv2.THRESH_BINARY_INV,25,16)
+    imgMedian = cv2.medianBlur(imgThreshold,5)
+
+
     checkParkingSpace()
     for pos in posList:
         cv2.rectangle(img, pos, (pos[0] + width, pos[1] + height), (255, 0, 255), 2)
@@ -36,6 +42,8 @@ while True :
 
     cv2.imshow("Image",img)
     cv2.imshow("ImageBlur", imgBlur)
+    cv2.imshow("ImageThreshold", imgThreshold)
+    cv2.imshow("ImageMedian", imgMedian)
     cv2.waitKey(1)
 
 # is car inside the rectangle or not
