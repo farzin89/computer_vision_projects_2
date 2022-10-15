@@ -18,7 +18,9 @@ def checkParkingSpace(imagepro):
         imgCrop = img[y:y+height,x:x+width]
         cv2.imshow(str(x*y),imgCrop)
 
-
+    # count the pixel of car spaces (if there is a lots of picture = car is otherwise there is no car
+        count = cv2.countNonZero(imgCrop)
+        cvzone.putTextRect(img,str(count),(x,y+height-10))
 while True :
 
     # in order to loop video
@@ -37,6 +39,10 @@ while True :
     #make thicker
     kernel = np.ones((3,3),np.uint8)
     imDilate = cv2.dilate(imgMedian,kernel,iterations = 1)
+
+
+
+
 
 
 
